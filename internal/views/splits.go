@@ -50,8 +50,7 @@ type Node struct {
 	// Defines the proportion of the screen this node should take up if propScale is
 	// on
 	propW, propH float64
-	// The id is unique for each leaf node and provides a way to keep track of a split.
-	// A node that gets split keeps its id and passes it on to the child taking its place.
+	// The id is unique for each leaf node and provides a way to keep track of a split
 	// The id cannot be 0
 	id uint64
 }
@@ -90,9 +89,12 @@ func (n *Node) IsLeaf() bool {
 	return len(n.children) == 0
 }
 
-// ID returns this node's id
+// ID returns this node's id or 0 if it is not viewable
 func (n *Node) ID() uint64 {
-	return n.id
+	if n.IsLeaf() {
+		return n.id
+	}
+	return 0
 }
 
 // CanResize returns if this node can be resized
